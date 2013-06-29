@@ -47,7 +47,8 @@ char* itoa(int integer, unsigned int radix) {
 	return int_str;
 }
 
-char* ivtoa(int* int_vec, unsigned int int_num, unsigned int radix) {
+char* ivtoa(int* int_vec, unsigned int int_num, const char* separator,
+		unsigned int radix) {
 	if (radix != 10)
 		return NULL;
 	char* ints_str = new char[100];
@@ -55,8 +56,15 @@ char* ivtoa(int* int_vec, unsigned int int_num, unsigned int radix) {
 	for (unsigned int i = 0; i < int_num; i++) {
 		char *int_str = itoa(int_vec[i], radix);
 		strcat(ints_str, int_str);
+		strcat(ints_str, separator);
 		if (int_str != NULL)
 			delete int_str;
+	}
+	size_t ints_str_len = strlen(ints_str);
+	size_t separator_len = strlen(separator);
+	size_t offset = ints_str_len - separator_len;
+	if (separator_len > 0) {
+		memset(ints_str + offset, '\0', separator_len);
 	}
 	return ints_str;
 }
