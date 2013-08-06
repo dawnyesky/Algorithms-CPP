@@ -11,7 +11,7 @@
 
 unsigned int ysk_atoi(char *character, unsigned int length) {
 	unsigned int digit = 0;
-	for (unsigned int i = length - 1, j = 0; i >= 0; i--, j++) {
+	for (int i = length - 1, j = 0; i >= 0; i--, j++) {
 		digit += (character[i] - '0') * pow(10, j);
 	}
 	return digit;
