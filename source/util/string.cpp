@@ -68,3 +68,80 @@ char* ivtoa(int* int_vec, unsigned int int_num, const char* separator,
 	}
 	return ints_str;
 }
+
+char* trim(char* string, const char* delimeters, unsigned int& string_len) {
+	unsigned int start = 0;
+	unsigned int end = strlen(string);
+	//找到第一个不是定界符的字符
+	for (start = 0; start < strlen(string); start++) {
+		bool is_delimeter = false;
+		for (unsigned int j = 0; j < strlen(delimeters) && !is_delimeter; j++) {
+			is_delimeter |= (string[start] == delimeters[j]);
+		}
+		if (!is_delimeter) {
+			break;
+		}
+	}
+	//蒸行都是定界符
+	if (start == end) {
+		string_len = 0;
+		return NULL;
+	}
+	//找到最后一个不是定界符的字符
+	for (end = end - 1; end > start; end--) {
+		bool is_delimeter = false;
+		for (unsigned int j = 0; j < strlen(delimeters) && !is_delimeter; j++) {
+			is_delimeter |= (string[end] == delimeters[j]);
+		}
+		if (!is_delimeter) {
+			break;
+		}
+	}
+	string_len = end - start + 1;
+	return string + start;
+}
+
+char* trim_left(char* string, const char* delimeters,
+		unsigned int& string_len) {
+	unsigned int start = 0;
+	unsigned int end = strlen(string);
+	//找到第一个不是定界符的字符
+	for (start = 0; start < strlen(string); start++) {
+		bool is_delimeter = false;
+		for (unsigned int j = 0; j < strlen(delimeters) && !is_delimeter; j++) {
+			is_delimeter |= (string[start] == delimeters[j]);
+		}
+		if (!is_delimeter) {
+			break;
+		}
+	}
+	//蒸行都是定界符
+	if (start == end) {
+		string_len = 0;
+		return NULL;
+	}
+	string_len = end - start;
+	return string + start;
+}
+
+char* trim_right(char* string, const char* delimeters,
+		unsigned int& string_len) {
+	int end = strlen(string);
+	//找到最后一个不是定界符的字符
+	for (end = end - 1; end >= 0; end--) {
+		bool is_delimeter = false;
+		for (unsigned int j = 0; j < strlen(delimeters) && !is_delimeter; j++) {
+			is_delimeter |= (string[end] == delimeters[j]);
+		}
+		if (!is_delimeter) {
+			break;
+		}
+	}
+	//蒸行都是定界符
+	if (end == -1) {
+		string_len = 0;
+		return NULL;
+	}
+	string_len = end + 1;
+	return string;
+}
